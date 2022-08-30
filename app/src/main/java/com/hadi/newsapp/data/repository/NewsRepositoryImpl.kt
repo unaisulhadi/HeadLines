@@ -4,6 +4,8 @@ import com.hadi.newsapp.data.model.TopHeadLines
 import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.utils.Resource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -16,7 +18,7 @@ class NewsRepositoryImpl @Inject constructor(
         return try {
             val result = newsApi.getTopHeadLines()
             Resource.Success(result)
-        }catch (e: IOException) {
+        } catch (e: IOException) {
             e.printStackTrace()
             Resource.Error(
                 message = "Couldn't load Headlines"
