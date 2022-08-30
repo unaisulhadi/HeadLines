@@ -14,7 +14,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
 ) : NewsRepository {
 
-    override suspend fun getAllNews(): Resource<TopHeadLines> {
+    override suspend fun getTopHeadlines(): Resource<TopHeadLines> {
         return try {
             val result = newsApi.getTopHeadLines()
             Resource.Success(result)

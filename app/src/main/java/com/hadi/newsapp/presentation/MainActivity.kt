@@ -7,7 +7,9 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import com.hadi.newsapp.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
 

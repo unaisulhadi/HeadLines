@@ -9,7 +9,7 @@ import retrofit2.http.Query
 interface NewsApi {
 
     companion object{
-        const val BASE_URL = "https://api.dictionaryapi.dev/"
+        const val BASE_URL = "https://newsapi.org/v2/"
     }
 
     @GET("top-headlines")
