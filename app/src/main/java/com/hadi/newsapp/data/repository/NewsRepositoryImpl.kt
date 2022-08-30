@@ -14,20 +14,21 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
 ) : NewsRepository {
 
-    override suspend fun getTopHeadlines(): Resource<TopHeadLines> {
-        return try {
+    override fun getTopHeadlines(): Flow<Resource<TopHeadLines>> = flow{
+        try {
+            emit(Resource.Loading())
             val result = newsApi.getTopHeadLines()
-            Resource.Success(result)
+            emit(Resource.Success(result))
         } catch (e: IOException) {
             e.printStackTrace()
-            Resource.Error(
+            emit(Resource.Error(
                 message = "Couldn't load Headlines"
-            )
+            ))
         } catch (e: HttpException) {
             e.printStackTrace()
-            Resource.Error(
+            emit(Resource.Error(
                 message = "Couldn't load Headlines"
-            )
+            ))
         }
     }
 

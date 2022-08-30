@@ -11,8 +11,7 @@ class GetNewsUseCase @Inject constructor(
     private val repository: NewsRepository,
 ) {
 
-    operator fun invoke(): Flow<Resource<TopHeadLines>> = flow {
-        repository.getTopHeadlines()
-    }
+    operator fun invoke(): Flow<Resource<TopHeadLines>> = repository.getTopHeadlines()
+
 
 }
