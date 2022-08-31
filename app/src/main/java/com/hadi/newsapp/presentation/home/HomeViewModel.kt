@@ -6,6 +6,9 @@ import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.domain.usecases.UseCases
 import com.hadi.newsapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,7 +18,6 @@ class HomeViewModel @Inject constructor(
     private val repository: NewsRepository
 ) : ViewModel() {
 
-    var text = "TEXT"
     private var _headlines = MutableLiveData<Resource<TopHeadLines>>()
     var headlines : LiveData<Resource<TopHeadLines>>  = _headlines
 
@@ -24,19 +26,12 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getTopHeadLines() = viewModelScope.launch {
-        when(val result = repository.getTopHeadlines()){
-            is Resource.Success -> {
-                _headlines.postValue(Resource.Success(result.data))
-            }
-            is Resource.Error -> {
-                _headlines.postValue(Resource.Error(result.message!!))
-            }
-            is Resource.Loading -> {
-                _headlines.postValue(Resource.Loading())
-            }
+
+        useCase.getNewsUseCase().collect{
+            _headlines.postValue(it)
         }
+
     }
 
-    val topHeadLines = useCase.getNewsUseCase().asLiveData()
 
 }

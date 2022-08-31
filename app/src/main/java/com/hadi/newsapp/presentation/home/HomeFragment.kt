@@ -29,11 +29,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
-        Timber.d("VIEWMODEL=${viewModel.text}")
-
         viewModel.headlines.observe(viewLifecycleOwner) { response ->
-            Timber.d("VIEWMODEL=OBSERVING")
             when (response) {
                 is Resource.Success -> {
                     Timber.d("VIEWMODEL=SUCCESS")
@@ -45,14 +41,8 @@ class HomeFragment : Fragment() {
                 is Resource.Loading -> {
                     Timber.d("VIEWMODEL=LOADING")
                 }
-                else -> {
-                    Timber.d("VIEWMODEL=SOMETHING WRONG")
-                }
             }
-
-
         }
-
 
 
         return binding.root
