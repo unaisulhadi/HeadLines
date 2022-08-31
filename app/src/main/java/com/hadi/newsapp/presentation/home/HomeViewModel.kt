@@ -14,8 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCases,
-    private val repository: NewsRepository
+    private val useCase: UseCases
 ) : ViewModel() {
 
     private var _headlines = MutableLiveData<Resource<TopHeadLines>>()
