@@ -8,6 +8,7 @@ import com.hadi.newsapp.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,11 +26,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getTopHeadLines() = viewModelScope.launch {
-
-        useCase.getNewsUseCase().collect{
-            _headlines.postValue(it)
-        }
-
+        headlines = useCase.getNewsUseCase().asLiveData()
     }
 
 
