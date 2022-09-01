@@ -6,9 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.hadi.newsapp.R
 import com.hadi.newsapp.databinding.FragmentHomeBinding
+import com.hadi.newsapp.presentation.common.adapter.TopHeadlineAdapter
 import com.hadi.newsapp.utils.Resource
+import com.hadi.newsapp.utils.gone
+import com.hadi.newsapp.utils.shortToast
+import com.hadi.newsapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
@@ -22,6 +27,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     val binding get() = _binding!!
 
+    private val topHeadlinesAdapter by lazy { TopHeadlineAdapter() }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -29,23 +36,46 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        viewModel.headlines.observe(viewLifecycleOwner) { response ->
-            when (response) {
-                is Resource.Success -> {
-                    Timber.d("VIEWMODEL=SUCCESS")
-                    Timber.d("VIEWMODEL=${response.data?.status}")
-                }
-                is Resource.Error -> {
-                    Timber.d("VIEWMODEL=ERROR")
-                }
-                is Resource.Loading -> {
-                    Timber.d("VIEWMODEL=LOADING")
-                }
-            }
-        }
+
+        initUI()
+        getTopHeadlines()
+
+
 
 
         return binding.root
+    }
+
+    private fun initUI() {
+        binding.rvTrending.apply {
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            adapter = topHeadlinesAdapter
+        }
+    }
+
+    private fun getTopHeadlines() {
+        viewModel.headlines.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    binding.progress.gone()
+                    response.data?.let { topHeadLines ->
+                        if(topHeadLines.articles.isNullOrEmpty()){
+                            requireContext().shortToast("No articles found!")
+                        }else{
+                            topHeadlinesAdapter.submitList(topHeadLines.articles)
+                        }
+
+                    }
+                }
+                is Resource.Error -> {
+                    requireContext().shortToast(response.message!!)
+                    binding.progress.gone()
+                }
+                is Resource.Loading -> {
+                    binding.progress.show()
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

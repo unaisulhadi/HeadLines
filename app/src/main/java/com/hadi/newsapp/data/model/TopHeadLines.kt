@@ -5,7 +5,7 @@ import com.squareup.moshi.Json
 
 data class TopHeadLines(
     @Json(name = "articles")
-    val articles: List<Article>,
+    val articles: List<Article>?,
     @Json(name = "status")
     val status: String,
     @Json(name = "totalResults")
@@ -13,7 +13,7 @@ data class TopHeadLines(
 ) {
     data class Article(
         @Json(name = "author")
-        val author: String,
+        val author: String?,
         @Json(name = "content")
         val content: String,
         @Json(name = "description")
