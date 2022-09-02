@@ -1,7 +1,10 @@
 package com.hadi.newsapp.utils
 
 import android.content.Context
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 
 fun Context.shortToast(message: String) {
@@ -18,4 +21,10 @@ fun View.show() {
 
 fun View.hide() {
     this.visibility = View.INVISIBLE
+}
+
+fun ImageView.setMinSaturation() {
+    val matrix = ColorMatrix()
+    matrix.setSaturation(0f)
+    colorFilter = ColorMatrixColorFilter(matrix)
 }

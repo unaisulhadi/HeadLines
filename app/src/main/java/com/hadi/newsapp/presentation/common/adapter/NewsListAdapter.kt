@@ -7,36 +7,38 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.hadi.newsapp.data.model.NewsResponse
+import com.hadi.newsapp.databinding.ItemNewsBinding
 import com.hadi.newsapp.databinding.ItemTopHeadlineBinding
 import com.hadi.newsapp.utils.setMinSaturation
 
-class TopHeadlineAdapter :
-    ListAdapter<NewsResponse.Article, TopHeadlineViewHolder>(DiffUtilCallBack()) {
+class NewsListAdapter :
+    ListAdapter<NewsResponse.Article, NewsListViewHolder>(DiffUtilCallBack()) {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopHeadlineViewHolder {
-        return TopHeadlineViewHolder(
-            ItemTopHeadlineBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
+        return NewsListViewHolder(
+            ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: TopHeadlineViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
     }
 }
 
 
-class TopHeadlineViewHolder(
-    private val binding: ItemTopHeadlineBinding,
+class NewsListViewHolder(
+    private val binding: ItemNewsBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(data: NewsResponse.Article) {
 
         binding.tvTitle.text = data.title
-        binding.ivThumbnail.load(data.urlToImage)
+        binding.tvContent.text = data.content
+        //
         binding.ivThumbnail.setMinSaturation()
+        binding.ivThumbnail.load(data.urlToImage)
     }
 
 }
-

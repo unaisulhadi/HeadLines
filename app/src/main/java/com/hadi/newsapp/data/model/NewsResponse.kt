@@ -3,7 +3,7 @@ package com.hadi.newsapp.data.model
 
 import com.squareup.moshi.Json
 
-data class TopHeadLines(
+data class NewsResponse(
     @Json(name = "articles")
     val articles: List<Article>?,
     @Json(name = "status")

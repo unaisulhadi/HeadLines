@@ -1,6 +1,6 @@
 package com.hadi.newsapp.data.repository
 
-import com.hadi.newsapp.data.model.TopHeadLines
+import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.utils.Resource
@@ -14,7 +14,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsApi: NewsApi,
 ) : NewsRepository {
 
-    override fun getTopHeadlines(): Flow<Resource<TopHeadLines>> = flow {
+    override fun getTopHeadlines(): Flow<Resource<NewsResponse>> = flow {
         try {
             emit(Resource.Loading())
             val result = newsApi.getTopHeadLines()
@@ -32,5 +32,21 @@ class NewsRepositoryImpl @Inject constructor(
         }
     }
 
-
+    override fun getEverything(): Flow<Resource<NewsResponse>> = flow {
+        try {
+            emit(Resource.Loading())
+            val result = newsApi.getEverything()
+            emit(Resource.Success(result))
+        } catch (e: IOException) {
+            e.printStackTrace()
+            emit(Resource.Error(
+                message = "Couldn't load Headlines"
+            ))
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            emit(Resource.Error(
+                message = "Couldn't load Headlines"
+            ))
+        }
+    }
 }

@@ -1,8 +1,7 @@
 package com.hadi.newsapp.data.remote
 
 import com.hadi.newsapp.BuildConfig
-import com.hadi.newsapp.data.model.TopHeadLines
-import com.hadi.newsapp.utils.Resource
+import com.hadi.newsapp.data.model.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -16,6 +15,15 @@ interface NewsApi {
     suspend fun getTopHeadLines(
         @Query("country") country:String = "in",
         @Query("apiKey") apiKey:String = BuildConfig.API_KEY
-    ): TopHeadLines
+    ): NewsResponse
+
+
+    @GET("everything?q=technology")
+    suspend fun getEverything(
+        @Query("apiKey") apiKey:String = BuildConfig.API_KEY
+    ): NewsResponse
+
+
+
 
 }

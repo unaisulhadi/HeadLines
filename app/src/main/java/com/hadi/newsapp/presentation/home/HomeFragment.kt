@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.hadi.newsapp.R
 import com.hadi.newsapp.databinding.FragmentHomeBinding
+import com.hadi.newsapp.presentation.common.adapter.NewsListAdapter
 import com.hadi.newsapp.presentation.common.adapter.TopHeadlineAdapter
 import com.hadi.newsapp.utils.Resource
 import com.hadi.newsapp.utils.gone
@@ -25,9 +28,10 @@ class HomeFragment : Fragment() {
     private val viewModel by viewModels<HomeViewModel>()
 
     private var _binding: FragmentHomeBinding? = null
-    val binding get() = _binding!!
+    private val binding get() = _binding!!
 
     private val topHeadlinesAdapter by lazy { TopHeadlineAdapter() }
+    private val allNewsAdapter by lazy { NewsListAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +43,7 @@ class HomeFragment : Fragment() {
 
         initUI()
         getTopHeadlines()
-
+        getEverything()
 
 
 
@@ -50,6 +54,22 @@ class HomeFragment : Fragment() {
         binding.rvTrending.apply {
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             adapter = topHeadlinesAdapter
+            binding.dotsIndicator.attachTo(this)
+        }
+        binding.rvMain.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            ))
+            adapter = allNewsAdapter
+        }
+        binding.btnNext.setOnClickListener {
+
+        }
+        binding.btnPrev.setOnClickListener {
+
         }
     }
 
@@ -59,10 +79,36 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     binding.progress.gone()
                     response.data?.let { topHeadLines ->
-                        if(topHeadLines.articles.isNullOrEmpty()){
+                        if (topHeadLines.articles.isNullOrEmpty()) {
                             requireContext().shortToast("No articles found!")
-                        }else{
-                            topHeadlinesAdapter.submitList(topHeadLines.articles)
+                        } else {
+                            //List only 5 items
+                            topHeadlinesAdapter.submitList(topHeadLines.articles.take(5))
+                        }
+
+                    }
+                }
+                is Resource.Error -> {
+                    requireContext().shortToast(response.message!!)
+                    binding.progress.gone()
+                }
+                is Resource.Loading -> {
+                    binding.progress.show()
+                }
+            }
+        }
+    }
+
+    private fun getEverything() {
+        viewModel.everything.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    binding.progress.gone()
+                    response.data?.let { newsResponse ->
+                        if (newsResponse.articles.isNullOrEmpty()) {
+                            requireContext().shortToast("No articles found!")
+                        } else {
+                            allNewsAdapter.submitList(newsResponse.articles)
                         }
 
                     }
