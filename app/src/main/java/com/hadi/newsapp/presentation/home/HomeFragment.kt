@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
@@ -31,7 +33,11 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val topHeadlinesAdapter by lazy { TopHeadlineAdapter() }
-    private val allNewsAdapter by lazy { NewsListAdapter() }
+    private val allNewsAdapter by lazy {
+        NewsListAdapter() {
+            //val action =
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +45,6 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
 
         initUI()
         getTopHeadlines()
@@ -82,8 +87,10 @@ class HomeFragment : Fragment() {
                         if (topHeadLines.articles.isNullOrEmpty()) {
                             requireContext().shortToast("No articles found!")
                         } else {
-                            //List only 5 items
-                            topHeadlinesAdapter.submitList(topHeadLines.articles.take(5))
+                            //List only 5 items for the Sake of UI 😂😂
+                            val items =
+                                if (topHeadLines.articles.size > 5) topHeadLines.articles.take(5) else topHeadLines.articles
+                            topHeadlinesAdapter.submitList(items)
                         }
 
                     }

@@ -11,7 +11,9 @@ import com.hadi.newsapp.databinding.ItemNewsBinding
 import com.hadi.newsapp.databinding.ItemTopHeadlineBinding
 import com.hadi.newsapp.utils.setMinSaturation
 
-class NewsListAdapter :
+class NewsListAdapter(
+    val onClick : (article : NewsResponse.Article) -> Unit
+) :
     ListAdapter<NewsResponse.Article, NewsListViewHolder>(DiffUtilCallBack()) {
 
 
@@ -24,12 +26,15 @@ class NewsListAdapter :
     override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
+        holder.binding.root.setOnClickListener {
+            onClick(item)
+        }
     }
 }
 
 
 class NewsListViewHolder(
-    private val binding: ItemNewsBinding,
+    val binding: ItemNewsBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(data: NewsResponse.Article) {
@@ -39,6 +44,7 @@ class NewsListViewHolder(
         //
         binding.ivThumbnail.setMinSaturation()
         binding.ivThumbnail.load(data.urlToImage)
+
     }
 
 }

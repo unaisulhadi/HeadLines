@@ -1,7 +1,10 @@
 package com.hadi.newsapp.data.model
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.parcelize.Parcelize
+
 
 data class NewsResponse(
     @Json(name = "articles")
@@ -11,6 +14,8 @@ data class NewsResponse(
     @Json(name = "totalResults")
     val totalResults: Int
 ) {
+
+    @Parcelize
     data class Article(
         @Json(name = "author")
         val author: String?,
@@ -28,12 +33,13 @@ data class NewsResponse(
         val url: String,
         @Json(name = "urlToImage")
         val urlToImage: String
-    ) {
+    ) : Parcelable {
+        @Parcelize
         data class Source(
             @Json(name = "id")
             val id: String,
             @Json(name = "name")
             val name: String
-        )
+        ) : Parcelable
     }
 }

@@ -41,5 +41,11 @@
         android:id="@+id/webFragment"
         android:name="com.hadi.newsapp.presentation.web.WebFragment"
         android:label="fragment_web"
-        tools:layout="@layout/fragment_web" />
+        tools:layout="@layout/fragment_web" >
+        <argument
+            android:name="article"
+            app:argType="com.hadi.newsapp.data.model.NewsResponse$Article"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+    </fragment>
 </navigation>
