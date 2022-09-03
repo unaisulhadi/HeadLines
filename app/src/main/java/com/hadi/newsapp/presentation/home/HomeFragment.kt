@@ -35,9 +35,7 @@ class HomeFragment : Fragment() {
     private val topHeadlinesAdapter by lazy { TopHeadlineAdapter() }
     private val allNewsAdapter by lazy {
         NewsListAdapter() {
-            val action = HomeFragmentDirections.actionHomeFragmentToWebFragment(
-                article = it
-            )
+            val action = HomeFragmentDirections.actionHomeFragmentToWebFragment(it)
             findNavController().navigate(action)
         }
     }
