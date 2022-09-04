@@ -56,8 +56,6 @@
             app:destination="@id/webFragment" />
         <argument
             android:name="newsArticle"
-            app:argType="com.hadi.newsapp.data.model.NewsResponse$Article"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.hadi.newsapp.data.model.NewsResponse$Article"/>
     </fragment>
 </navigation>
