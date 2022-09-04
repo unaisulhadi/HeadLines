@@ -32,7 +32,7 @@ data class NewsResponse(
         @Json(name = "url")
         val url: String,
         @Json(name = "urlToImage")
-        val urlToImage: String
+        val urlToImage: String?
     ) : Parcelable {
         @Parcelize
         data class Source(
