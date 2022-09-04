@@ -37,9 +37,9 @@ data class NewsResponse(
         @Parcelize
         data class Source(
             @Json(name = "id")
-            val id: String,
+            val id: String?,
             @Json(name = "name")
-            val name: String
+            val name: String?
         ) : Parcelable
     }
 }

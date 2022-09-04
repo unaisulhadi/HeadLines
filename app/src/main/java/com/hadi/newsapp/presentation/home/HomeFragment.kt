@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import com.hadi.newsapp.R
+import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.databinding.FragmentHomeBinding
 import com.hadi.newsapp.presentation.common.adapter.NewsListAdapter
 import com.hadi.newsapp.presentation.common.adapter.TopHeadlineAdapter
@@ -20,7 +19,6 @@ import com.hadi.newsapp.utils.gone
 import com.hadi.newsapp.utils.shortToast
 import com.hadi.newsapp.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import timber.log.Timber
 
 
@@ -32,13 +30,8 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private val topHeadlinesAdapter by lazy { TopHeadlineAdapter() }
-    private val allNewsAdapter by lazy {
-        NewsListAdapter() {
-            val action = HomeFragmentDirections.actionHomeFragmentToWebFragment(it)
-            findNavController().navigate(action)
-        }
-    }
+    private lateinit var topHeadlinesAdapter: TopHeadlineAdapter
+    private lateinit var allNewsAdapter: NewsListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +40,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        initUI()
+        initialize()
         getTopHeadlines()
         getEverything()
 
@@ -56,7 +49,16 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-    private fun initUI() {
+    private fun initialize() {
+
+
+        allNewsAdapter = NewsListAdapter {
+           gotoNewsDetails(it)
+        }
+        topHeadlinesAdapter = TopHeadlineAdapter {
+            gotoNewsDetails(it)
+        }
+
         binding.rvTrending.apply {
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
             adapter = topHeadlinesAdapter
@@ -77,6 +79,11 @@ class HomeFragment : Fragment() {
         binding.btnPrev.setOnClickListener {
 
         }
+    }
+
+    private fun gotoNewsDetails(news: NewsResponse.Article) {
+        val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(news)
+        findNavController().navigate(action)
     }
 
     private fun getTopHeadlines() {

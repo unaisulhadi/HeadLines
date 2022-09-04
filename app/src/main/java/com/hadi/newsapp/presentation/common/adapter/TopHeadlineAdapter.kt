@@ -10,7 +10,9 @@ import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.databinding.ItemTopHeadlineBinding
 import com.hadi.newsapp.utils.setMinSaturation
 
-class TopHeadlineAdapter :
+class TopHeadlineAdapter(
+    val onClick : (article : NewsResponse.Article) -> Unit
+) :
     ListAdapter<NewsResponse.Article, TopHeadlineViewHolder>(DiffUtilCallBack()) {
 
 
@@ -23,12 +25,16 @@ class TopHeadlineAdapter :
     override fun onBindViewHolder(holder: TopHeadlineViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item)
+
+        holder.binding.itemRoot.setOnClickListener {
+            onClick(item)
+        }
     }
 }
 
 
 class TopHeadlineViewHolder(
-    private val binding: ItemTopHeadlineBinding,
+    val binding: ItemTopHeadlineBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(data: NewsResponse.Article) {
