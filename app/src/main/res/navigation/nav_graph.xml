@@ -27,6 +27,9 @@
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsFragment"
+            app:destination="@id/newsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -57,5 +60,14 @@
         <argument
             android:name="newsArticle"
             app:argType="com.hadi.newsapp.data.model.NewsResponse$Article"/>
+    </fragment>
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.hadi.newsapp.NewsFragment"
+        android:label="fragment_news"
+        tools:layout="@layout/fragment_news" >
+        <action
+            android:id="@+id/action_newsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
 </navigation>

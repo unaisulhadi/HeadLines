@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.hadi.newsapp.R
@@ -34,8 +35,21 @@ class DetailsFragment : Fragment() {
     private fun initialize() {
         article = args.newsArticle
         binding.tvNewsTitle.text = article.title
+        binding.tvDate.text = article.publishedAt
+        binding.tvAuthor.text = article.author
         binding.tvContent.text = article.content
         binding.ivThumbnail.load(article.urlToImage)
+
+        binding.btnSeeFull.setOnClickListener {
+            val action = DetailsFragmentDirections.actionDetailsFragmentToWebFragment(article.url)
+            findNavController().navigate(action)
+        }
+
+        binding.ivBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
+
+
 
 }
