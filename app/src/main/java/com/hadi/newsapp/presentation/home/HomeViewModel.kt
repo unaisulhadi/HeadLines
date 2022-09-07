@@ -10,15 +10,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val useCase: UseCases
+    private val useCase: UseCases,
 ) : ViewModel() {
 
-    private var _headlines = MutableLiveData<Resource<NewsResponse>>()
-    var headlines : LiveData<Resource<NewsResponse>>  = _headlines
-
-
-    private var _everything = MutableLiveData<Resource<NewsResponse>>()
-    var everything : LiveData<Resource<NewsResponse>>  = _everything
+    var headlines: LiveData<Resource<NewsResponse>> = MutableLiveData()
+    var everything: LiveData<Resource<NewsResponse>> = MutableLiveData()
 
     init {
         getTopHeadLines()
@@ -32,7 +28,6 @@ class HomeViewModel @Inject constructor(
     private fun getEverything() = viewModelScope.launch {
         everything = useCase.getEverythingUseCase().asLiveData()
     }
-
 
 
 }

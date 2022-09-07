@@ -4,6 +4,7 @@ import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.data.repository.NewsRepositoryImpl
 import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.domain.usecases.GetEverythingUseCase
+import com.hadi.newsapp.domain.usecases.GetNewsByCategoryUseCase
 import com.hadi.newsapp.domain.usecases.GetTopHeadlinesUseCase
 import com.hadi.newsapp.domain.usecases.UseCases
 import dagger.Module
@@ -27,7 +28,8 @@ object RepositoryModule {
     fun provideUseCases(repository: NewsRepository) : UseCases  {
         return UseCases(
             getNewsUseCase = GetTopHeadlinesUseCase(repository),
-            getEverythingUseCase = GetEverythingUseCase(repository)
+            getEverythingUseCase = GetEverythingUseCase(repository),
+            getNewsByCategoryUseCase = GetNewsByCategoryUseCase(repository)
         )
     }
 

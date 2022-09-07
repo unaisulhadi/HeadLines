@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 
 data class NewsResponse(
     @Json(name = "articles")
-    val articles: List<Article>?,
+    val articles: List<Article>,
     @Json(name = "status")
     val status: String,
     @Json(name = "totalResults")

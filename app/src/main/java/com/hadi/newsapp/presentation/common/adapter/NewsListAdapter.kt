@@ -33,18 +33,4 @@ class NewsListAdapter(
 }
 
 
-class NewsListViewHolder(
-    val binding: ItemNewsBinding,
-) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(data: NewsResponse.Article) {
-
-        binding.tvTitle.text = data.title
-        binding.tvContent.text = data.content
-        //
-        binding.ivThumbnail.setMinSaturation()
-        binding.ivThumbnail.load(data.urlToImage)
-
-    }
-
-}

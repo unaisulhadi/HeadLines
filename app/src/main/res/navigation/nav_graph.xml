@@ -63,11 +63,14 @@
     </fragment>
     <fragment
         android:id="@+id/newsFragment"
-        android:name="com.hadi.newsapp.NewsFragment"
+        android:name="com.hadi.newsapp.presentation.news.NewsFragment"
         android:label="fragment_news"
         tools:layout="@layout/fragment_news" >
         <action
             android:id="@+id/action_newsFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
 </navigation>

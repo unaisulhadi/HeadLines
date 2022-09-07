@@ -1,6 +1,12 @@
 package com.hadi.newsapp.data.repository
 
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.hadi.newsapp.data.model.NewsResponse
+import com.hadi.newsapp.data.paging.NewsPagingSource
 import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.utils.Resource
@@ -40,13 +46,27 @@ class NewsRepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             e.printStackTrace()
             emit(Resource.Error(
-                message = "Couldn't load Headlines"
+                message = "Couldn't load News"
             ))
         } catch (e: HttpException) {
             e.printStackTrace()
             emit(Resource.Error(
-                message = "Couldn't load Headlines"
+                message = "Couldn't load News"
             ))
         }
     }
+
+    override suspend fun getNewsByCategory(
+        category: String
+    ): LiveData<PagingData<NewsResponse.Article>>  = Pager(
+        config = PagingConfig(
+            10,
+            2,
+            false,
+        ),
+        pagingSourceFactory = {
+            NewsPagingSource(newsApi)
+        }
+    ).liveData
+
 }
