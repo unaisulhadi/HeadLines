@@ -23,10 +23,10 @@ class NewsViewModel @Inject constructor(
     var newsByCategory: LiveData<PagingData<NewsResponse.Article>> = MutableLiveData()
 
 
-    var newsByCategoryFlow : Flow<Resource<NewsResponse>> = emptyFlow()
+    var newsByCategoryFlow : Flow<PagingData<NewsResponse.Article>> = emptyFlow()
 
     fun getNewsByCategory(category: String) = viewModelScope.launch {
-        newsByCategory = repository.getNewsByCategory(category).cachedIn(viewModelScope)
+        newsByCategoryFlow = repository.getNewsByCategory(category).cachedIn(viewModelScope)
         //newsByCategoryFlow = useCases.getNewsByCategoryUseCase(category)
     }
 

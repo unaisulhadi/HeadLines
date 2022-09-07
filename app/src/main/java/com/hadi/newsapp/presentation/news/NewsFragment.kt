@@ -59,23 +59,13 @@ class NewsFragment : Fragment() {
     private fun observeNewsByCategory() {
 
         // Flow -> Collecting flow from UI
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.newsByCategoryFlow.collect{ response ->
-//                    when(response){
-//                        is Resource.Success -> {
-//
-//                        }
-//                        is Resource.Error -> {
-//
-//                        }
-//                        is Resource.Loading -> {
-//
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.newsByCategoryFlow.collect{ pagingData ->
+                    newsAdapter.submitData(lifecycle, pagingData)
+                }
+            }
+        }
 
         newsAdapter.addLoadStateListener { state ->
             when(state.refresh){
@@ -92,10 +82,6 @@ class NewsFragment : Fragment() {
             }
         }
 
-
-        viewModel.newsByCategory.observe(viewLifecycleOwner){ pagingData ->
-            newsAdapter.submitData(lifecycle, pagingData)
-        }
 
     }
 

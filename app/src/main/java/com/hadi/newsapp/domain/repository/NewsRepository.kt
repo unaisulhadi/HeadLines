@@ -12,5 +12,5 @@ interface NewsRepository {
 
     fun getEverything(): Flow<Resource<NewsResponse>>
 
-    suspend fun getNewsByCategory(category: String) : LiveData<PagingData<NewsResponse.Article>>
+    suspend fun getNewsByCategory(category: String) : Flow<PagingData<NewsResponse.Article>>
 }
