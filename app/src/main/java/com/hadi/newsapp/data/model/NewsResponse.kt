@@ -20,7 +20,7 @@ data class NewsResponse(
         @Json(name = "author")
         val author: String?,
         @Json(name = "content")
-        val content: String,
+        val content: String?,
         @Json(name = "description")
         val description: String,
         @Json(name = "publishedAt")

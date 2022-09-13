@@ -21,7 +21,7 @@ object NetworkModule {
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
             if(BuildConfig.DEBUG) {
-                setLevel(HttpLoggingInterceptor.Level.BODY)
+                setLevel(HttpLoggingInterceptor.Level.BASIC)
             }else{
                 setLevel(HttpLoggingInterceptor.Level.NONE)
             }

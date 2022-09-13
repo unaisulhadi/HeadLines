@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,7 +34,10 @@ class NewsFragment : Fragment() {
     private val viewModel by viewModels<NewsViewModel>()
     private val args by navArgs<NewsFragmentArgs>()
 
-    private var newsAdapter = NewsPagingAdapter()
+    private var newsAdapter = NewsPagingAdapter{
+        val action = NewsFragmentDirections.actionNewsFragmentToDetailsFragment(it)
+        findNavController().navigate(action)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +54,12 @@ class NewsFragment : Fragment() {
     }
 
     private fun initUI() {
-        binding.rvNews.apply {
+
+        binding.ivBackNews.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.rvAllNews.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = newsAdapter
         }
@@ -70,13 +79,13 @@ class NewsFragment : Fragment() {
         newsAdapter.addLoadStateListener { state ->
             when(state.refresh){
                 is LoadState.NotLoading -> {
-                    binding.progress.hide()
+                    binding.progressNews.hide()
                 }
                 LoadState.Loading -> {
-                    binding.progress.show()
+                    binding.progressNews.show()
                 }
                 is LoadState.Error -> {
-                    binding.progress.hide()
+                    binding.progressNews.hide()
                     requireContext().shortToast("Error occurred!")
                 }
             }

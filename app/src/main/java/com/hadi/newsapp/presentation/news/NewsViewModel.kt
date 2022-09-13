@@ -11,26 +11,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class NewsViewModel @Inject constructor(
-    private val useCases: UseCases,
-    private val repository: NewsRepository
+    private val useCases: UseCases
 ) : ViewModel() {
 
-    var newsByCategory: LiveData<PagingData<NewsResponse.Article>> = MutableLiveData()
-
-
-    var newsByCategoryFlow : Flow<PagingData<NewsResponse.Article>> = emptyFlow()
+    var newsByCategoryFlow: Flow<PagingData<NewsResponse.Article>> = emptyFlow()
 
     fun getNewsByCategory(category: String) = viewModelScope.launch {
-        newsByCategoryFlow = repository.getNewsByCategory(category).cachedIn(viewModelScope)
-        //newsByCategoryFlow = useCases.getNewsByCategoryUseCase(category)
+
+        newsByCategoryFlow = useCases.getNewsByCategoryUseCase(category).cachedIn(viewModelScope)
     }
-
-
 
 
 }

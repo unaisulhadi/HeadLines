@@ -12,8 +12,8 @@ class GetNewsByCategoryUseCase @Inject constructor(
     private val repository: NewsRepository,
 ) {
 
-//    operator fun invoke(category: String) : LiveData<PagingData<NewsResponse.Article>> {
-//        return repository.getNewsByCategory(category)
-//    }
+    suspend operator fun invoke(category: String) : Flow<PagingData<NewsResponse.Article>> {
+        return repository.getNewsByCategory(category)
+    }
 
 }

@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/all_news_screen_root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background2">
 
     <ImageView
-        android:id="@+id/iv_back"
+        android:id="@+id/iv_back_news"
         android:layout_width="@dimen/_28sdp"
         android:layout_height="@dimen/_28sdp"
         android:layout_marginStart="16dp"
@@ -19,7 +20,7 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_news_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/rockwell_std_bold"
@@ -28,14 +29,14 @@
         android:textColor="@color/black"
         android:textSize="@dimen/_16ssp"
         android:layout_marginEnd="@dimen/_32sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_back_news"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv_back"
-        app:layout_constraintTop_toTopOf="@+id/iv_back" />
+        app:layout_constraintStart_toEndOf="@+id/iv_back_news"
+        app:layout_constraintTop_toTopOf="@+id/iv_back_news" />
 
 
     <View
-        android:id="@+id/line_3"
+        android:id="@+id/line_3_news"
         android:layout_width="0dp"
         android:layout_height="@dimen/_1sdp"
         android:layout_marginStart="16dp"
@@ -44,11 +45,11 @@
         android:background="@color/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_back" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_back_news" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_news"
+        android:id="@+id/rv_all_news"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -56,10 +57,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line_3" />
+        app:layout_constraintTop_toBottomOf="@+id/line_3_news" />
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/progress_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

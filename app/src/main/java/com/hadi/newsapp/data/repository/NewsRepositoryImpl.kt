@@ -61,9 +61,10 @@ class NewsRepositoryImpl @Inject constructor(
     ): Flow<PagingData<NewsResponse.Article>>  = Pager(
         config = PagingConfig(
             10,
-            1,
-            false,
+            2,
+            false
         ),
+
         pagingSourceFactory = {
             NewsPagingSource(newsApi)
         }
