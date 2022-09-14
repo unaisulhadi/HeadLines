@@ -31,9 +31,10 @@ class NewsPagingSource(
                 // ensure we're not requesting duplicating items, at the 2nd request
                 position + (params.loadSize / NETWORK_PAGE_SIZE)
             }
+            val prevKey = if ((params.key ?: 0) <= STARTING_INDEX) null else position - 1
             LoadResult.Page(
                 data = data.articles,
-                prevKey = if (params.key == STARTING_INDEX) null else position - 1,
+                prevKey = prevKey,
                 nextKey = nextKey
             )
         } catch (e: IOException) {
@@ -44,9 +45,6 @@ class NewsPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, NewsResponse.Article>): Int? {
-        return state.anchorPosition?.let { anchorPosition ->
-            state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
-                ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
-        }
+        return state.anchorPosition
     }
 }

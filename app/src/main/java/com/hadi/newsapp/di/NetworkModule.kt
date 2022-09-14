@@ -19,13 +19,13 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
-        return HttpLoggingInterceptor().apply {
-            if(BuildConfig.DEBUG) {
-                setLevel(HttpLoggingInterceptor.Level.BASIC)
-            }else{
-                setLevel(HttpLoggingInterceptor.Level.NONE)
+            return HttpLoggingInterceptor().apply {
+                if(BuildConfig.DEBUG) {
+                    setLevel(HttpLoggingInterceptor.Level.BASIC)
+                }else{
+                    setLevel(HttpLoggingInterceptor.Level.NONE)
+                }
             }
-        }
     }
 
     @Provides

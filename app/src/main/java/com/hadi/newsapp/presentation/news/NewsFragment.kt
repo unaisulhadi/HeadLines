@@ -60,6 +60,7 @@ class NewsFragment : Fragment() {
         }
 
         binding.rvAllNews.apply {
+            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = newsAdapter
         }

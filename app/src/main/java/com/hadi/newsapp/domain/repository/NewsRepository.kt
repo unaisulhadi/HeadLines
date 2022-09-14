@@ -1,6 +1,7 @@
 package com.hadi.newsapp.domain.repository
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
 import androidx.paging.PagingData
 import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.utils.Resource
@@ -12,5 +13,6 @@ interface NewsRepository {
 
     fun getEverything(): Flow<Resource<NewsResponse>>
 
-    suspend fun getNewsByCategory(category: String) : Flow<PagingData<NewsResponse.Article>>
+    suspend fun getNewsByCategory(category: String) : Pager<Int, NewsResponse.Article>
+
 }

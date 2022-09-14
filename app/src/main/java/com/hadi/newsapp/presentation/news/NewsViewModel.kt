@@ -23,8 +23,7 @@ class NewsViewModel @Inject constructor(
     var newsByCategoryFlow: Flow<PagingData<NewsResponse.Article>> = emptyFlow()
 
     fun getNewsByCategory(category: String) = viewModelScope.launch {
-
-        newsByCategoryFlow = useCases.getNewsByCategoryUseCase(category).cachedIn(viewModelScope)
+        newsByCategoryFlow = useCases.getNewsByCategoryUseCase(category).flow.cachedIn(viewModelScope)
     }
 
 
