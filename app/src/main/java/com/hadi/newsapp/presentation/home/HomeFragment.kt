@@ -73,10 +73,17 @@ class HomeFragment : Fragment() {
             ))
             adapter = allNewsAdapter
         }
+
         binding.btnNext.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsFragment("technology")
             findNavController().navigate(action)
         }
+
+        binding.ivSearch.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragmentToSearchFragment()
+            findNavController().navigate(action)
+        }
+
         binding.btnPrev.setOnClickListener {
 
         }

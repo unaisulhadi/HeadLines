@@ -81,13 +81,16 @@ class NewsFragment : Fragment() {
             when(state.refresh){
                 is LoadState.NotLoading -> {
                     binding.progressNews.hide()
+                    Timber.d("OkHttp:NOT LOADING")
                 }
-                LoadState.Loading -> {
+                is LoadState.Loading -> {
                     binding.progressNews.show()
+                    Timber.d("OkHttp:LOADING")
                 }
                 is LoadState.Error -> {
                     binding.progressNews.hide()
                     requireContext().shortToast("Error occurred!")
+                    Timber.d("OkHttp:Error")
                 }
             }
         }

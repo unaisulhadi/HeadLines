@@ -13,7 +13,7 @@ class GetNewsByCategoryUseCase @Inject constructor(
     private val repository: NewsRepository,
 ) {
 
-    suspend operator fun invoke(category: String) : Pager<Int, NewsResponse.Article> {
+    suspend operator fun invoke(category: String) : Flow<PagingData<NewsResponse.Article>> {
         return repository.getNewsByCategory(category)
     }
 

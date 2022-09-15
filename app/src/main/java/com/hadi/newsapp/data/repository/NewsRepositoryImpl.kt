@@ -58,13 +58,13 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun getNewsByCategory(
         category: String
-    ): Pager<Int, NewsResponse.Article> = Pager(
+    ): Flow<PagingData<NewsResponse.Article>> = Pager(
         config = PagingConfig(
             pageSize = 10,
         ),
         pagingSourceFactory = {
             NewsPagingSource(newsApi)
         }
-    )
+    ).flow
 
 }
