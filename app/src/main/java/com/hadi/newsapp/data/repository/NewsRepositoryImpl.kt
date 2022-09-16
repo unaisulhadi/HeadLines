@@ -76,4 +76,13 @@ class NewsRepositoryImpl @Inject constructor(
             SearchNewsPagingSource(newsApi, query)
         }
     ).liveData
+
+    override fun searchNewsFlow(query: String): Flow<PagingData<NewsResponse.Article>> = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+        ),
+        pagingSourceFactory = {
+            SearchNewsPagingSource(newsApi, query)
+        }
+    ).flow
 }

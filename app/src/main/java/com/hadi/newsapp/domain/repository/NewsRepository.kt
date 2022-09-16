@@ -17,4 +17,6 @@ interface NewsRepository {
 
     fun searchNews(query : String) : LiveData<PagingData<NewsResponse.Article>>
 
+    fun searchNewsFlow(query: String) : Flow<PagingData<NewsResponse.Article>>
+
 }
