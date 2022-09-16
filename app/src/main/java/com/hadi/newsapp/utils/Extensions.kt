@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 

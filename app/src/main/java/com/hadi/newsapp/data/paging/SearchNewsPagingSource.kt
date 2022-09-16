@@ -13,17 +13,17 @@ import javax.inject.Inject
 
 
 
-class NewsPagingSource(
+class SearchNewsPagingSource(
     private val newsApi: NewsApi,
-    private val category: String
+    var query : String
 ) : PagingSource<Int, NewsResponse.Article>() {
 
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, NewsResponse.Article> {
         val position = params.key ?: STARTING_INDEX
         return try {
-            val data = newsApi.getNewsByCategory(
-                category = category,
+            val data = newsApi.searchNews(
+                query = query,
                 page = position,
                 pageSize = params.loadSize)
             val nextKey = if (data.articles.isEmpty()) {

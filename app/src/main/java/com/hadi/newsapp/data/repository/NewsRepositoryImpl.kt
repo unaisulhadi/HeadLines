@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.data.paging.NewsPagingSource
+import com.hadi.newsapp.data.paging.SearchNewsPagingSource
 import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.domain.repository.NewsRepository
 import com.hadi.newsapp.utils.Resource
@@ -63,8 +64,16 @@ class NewsRepositoryImpl @Inject constructor(
             pageSize = 10,
         ),
         pagingSourceFactory = {
-            NewsPagingSource(newsApi)
+            NewsPagingSource(newsApi,category)
         }
     ).flow
 
+    override fun searchNews(query: String): LiveData<PagingData<NewsResponse.Article>> = Pager(
+        config = PagingConfig(
+            pageSize = 10,
+        ),
+        pagingSourceFactory = {
+            SearchNewsPagingSource(newsApi, query)
+        }
+    ).liveData
 }

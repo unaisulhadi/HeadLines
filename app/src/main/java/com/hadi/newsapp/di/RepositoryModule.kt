@@ -3,10 +3,7 @@ package com.hadi.newsapp.di
 import com.hadi.newsapp.data.remote.NewsApi
 import com.hadi.newsapp.data.repository.NewsRepositoryImpl
 import com.hadi.newsapp.domain.repository.NewsRepository
-import com.hadi.newsapp.domain.usecases.GetEverythingUseCase
-import com.hadi.newsapp.domain.usecases.GetNewsByCategoryUseCase
-import com.hadi.newsapp.domain.usecases.GetTopHeadlinesUseCase
-import com.hadi.newsapp.domain.usecases.UseCases
+import com.hadi.newsapp.domain.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +26,8 @@ object RepositoryModule {
         return UseCases(
             getNewsUseCase = GetTopHeadlinesUseCase(repository),
             getEverythingUseCase = GetEverythingUseCase(repository),
-            getNewsByCategoryUseCase = GetNewsByCategoryUseCase(repository)
+            getNewsByCategoryUseCase = GetNewsByCategoryUseCase(repository),
+            searchNewsUseCase = SearchNewsUseCase(repository)
         )
     }
 
