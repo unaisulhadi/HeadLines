@@ -89,7 +89,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_2" />
 
-    <HorizontalScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_categories"
         android:layout_width="0dp"
         android:layout_height="@dimen/_40sdp"
@@ -97,55 +97,11 @@
         android:background="@color/primaryRed"
         android:fillViewport="true"
         android:clipToPadding="false"
-        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingHorizontal="@dimen/_8sdp"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="@+id/line_3"
         app:layout_constraintStart_toStartOf="@+id/line_3"
-        app:layout_constraintTop_toBottomOf="@+id/line_3">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sports"
-                style="@style/HomeCategoryTextStyle"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Health"
-                android:layout_marginStart="@dimen/_16sdp"
-                style="@style/HomeCategoryTextStyle"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tech"
-                android:layout_marginStart="@dimen/_16sdp"
-                style="@style/HomeCategoryTextStyle"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Finance"
-                android:layout_marginStart="@dimen/_16sdp"
-                style="@style/HomeCategoryTextStyle"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Politics"
-                android:layout_marginStart="@dimen/_16sdp"
-                style="@style/HomeCategoryTextStyle"/>
-
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/line_3"/>
 
     <View
         android:id="@+id/line_4"

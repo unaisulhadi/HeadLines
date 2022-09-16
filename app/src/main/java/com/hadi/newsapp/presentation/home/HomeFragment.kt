@@ -10,14 +10,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.hadi.newsapp.R
 import com.hadi.newsapp.data.model.NewsResponse
 import com.hadi.newsapp.databinding.FragmentHomeBinding
+import com.hadi.newsapp.presentation.common.adapter.NewsCategoryAdapter
 import com.hadi.newsapp.presentation.common.adapter.NewsListAdapter
 import com.hadi.newsapp.presentation.common.adapter.TopHeadlineAdapter
-import com.hadi.newsapp.utils.Resource
-import com.hadi.newsapp.utils.gone
-import com.hadi.newsapp.utils.shortToast
-import com.hadi.newsapp.utils.show
+import com.hadi.newsapp.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -30,6 +29,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var newsCategoryAdapter: NewsCategoryAdapter
     private lateinit var topHeadlinesAdapter: TopHeadlineAdapter
     private lateinit var allNewsAdapter: NewsListAdapter
 
@@ -51,9 +51,14 @@ class HomeFragment : Fragment() {
 
     private fun initialize() {
 
+        newsCategoryAdapter = NewsCategoryAdapter {
+            val action = HomeFragmentDirections.actionHomeFragmentToNewsFragment(it)
+            findNavController().navigate(action)
+        }
+
 
         allNewsAdapter = NewsListAdapter {
-           gotoNewsDetails(it)
+            gotoNewsDetails(it)
         }
         topHeadlinesAdapter = TopHeadlineAdapter {
             gotoNewsDetails(it)
@@ -64,6 +69,17 @@ class HomeFragment : Fragment() {
             adapter = topHeadlinesAdapter
             binding.dotsIndicator.attachTo(this)
         }
+
+        binding.rvCategories.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false)
+
+            adapter = newsCategoryAdapter
+        }
+
         binding.rvMain.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
@@ -72,11 +88,6 @@ class HomeFragment : Fragment() {
                 LinearLayoutManager.VERTICAL
             ))
             adapter = allNewsAdapter
-        }
-
-        binding.btnNext.setOnClickListener {
-            val action = HomeFragmentDirections.actionHomeFragmentToNewsFragment("technology")
-            findNavController().navigate(action)
         }
 
         binding.ivSearch.setOnClickListener {
